@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "rental" ALTER COLUMN "start_date" DROP NOT NULL,
+ALTER COLUMN "end_date" DROP NOT NULL,
+ALTER COLUMN "status" DROP NOT NULL,
+ALTER COLUMN "created_at" DROP NOT NULL,
+ALTER COLUMN "updated_at" DROP NOT NULL;
