@@ -14,7 +14,11 @@ export const useUserCarProviderHookIndex = (
   const QGetFilter = useQueryCarFilter(publicId, currentPath);
   const QGetCarList = useQueryCarList(publicId, currentPath);
 
-  const MPostCar = useMutationPostCar(currentPath);
+  const MPostCar = useMutationPostCar({
+    currentPath: currentPath,
+    queryKeyStatics: QGetStatistics.queryKeyCarListStatisc,
+    queryKeyCarList: QGetCarList.queryKeyCarList,
+  });
 
   return {
     ...QGetStatistics,

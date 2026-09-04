@@ -30,7 +30,11 @@ export const useQueryStatistics = (publicId: string, currentPath: string) => {
 
   const StatisticsData = useMemo(() => Statistics ?? [], [Statistics]);
 
-  return { StatisticsData, isFetchingStatistics };
+  return {
+    StatisticsData,
+    isFetchingStatistics,
+    queryKeyCarListStatisc: ["keyStatistics", publicId],
+  };
 };
 
 // ? CAR FILTER
@@ -284,7 +288,7 @@ export const useQueryCarList = (publicId: string, currentPath: string) => {
     IFNPCarList,
     isErrorCar,
     errorCar,
-    queryKeyTransactions: ["keyCarList", publicId],
+    queryKeyCarList: ["keyCarList", publicId],
     carLimit: limit,
   };
 };

@@ -87,10 +87,10 @@ model Rental {
 }
 
 model CarReturn {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  rental_user_id String @unique @db.Uuid
-  rental_id String @unique @db.Uuid
+  rental_user_id String  @db.Uuid
+  rental_id String  @id @db.Uuid
 
   return_date DateTime?
   total_days  Int

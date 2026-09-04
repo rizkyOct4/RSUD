@@ -15,9 +15,10 @@ const proxy = async (req: NextRequest) => {
   const publicPaths = ["/auth", "/api/auth", "/api", "/_next/"];
 
   const publicUrl =
-    (pathname === "/" ||
+    ((pathname === "/" ||
       publicPaths.some((path) => pathname.startsWith(path))) &&
-    req.method === "GET";
+      req.method === "GET") ||
+    "POST";
 
   if (publicUrl) {
     return NextResponse.next();
@@ -26,6 +27,7 @@ const proxy = async (req: NextRequest) => {
   const session = await GetSession();
   const publicId = session?.publicId;
   const userModel = session?.userModel;
+  // console.log(userModel)
 
   // ? CHECK AUTH =====
   const auth = Authentication(req, pathname, publicId);

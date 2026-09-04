@@ -9,7 +9,11 @@ import axios from "axios";
 import { QueryKey } from "@tanstack/react-query";
 import { ROUTES_USER_PROVIDER } from "../../config-route/route.config";
 
-export const useMutationPostCar = (currentPath: string) => {
+export const useMutationPostCar = ({
+  currentPath,
+  queryKeyStatics,
+  queryKeyCarList,
+}: any) => {
   const queryClient = useQueryClient();
 
   const { mutateAsync: postCar, isPending: isPendingPostCar } = useMutation({
@@ -21,46 +25,49 @@ export const useMutationPostCar = (currentPath: string) => {
       const res = await axios.post(URL, data);
       return res.data;
     },
-    // onMutate: async (mutate: {
-    //   id: string;
-    //   refId: string;
-    //   nominal: number;
-    //   information: string;
-    // }) => {
-    //   await Promise.all([
-    //     queryClient.cancelQueries({ queryKey: queryKeyTransactions }),
-    //   ]);
+    onMutate: async (mutate: any) => {
+      await Promise.all([
+        queryClient.cancelQueries({ queryKey: queryKeyStatics }),
+        queryClient.cancelQueries({ queryKey: queryKeyCarList }),
+      ]);
 
-    //   const prevTransactions = queryClient.getQueryData(queryKeyTransactions);
+      const prevStatistics = queryClient.getQueryData(queryKeyStatics);
+      const prevCarList = queryClient.getQueryData(queryKeyCarList);
 
-    //   queryClient.setQueryData<InfiniteData<TransactionsDataType[]>>(
-    //     queryKeyTransactions,
-    //     (oldData) => {
-    //       if (!oldData) return oldData;
+      // queryClient.setQueryData<InfiniteData<TransactionsDataType[]>>(
+      //   queryKeyTransactions,
+      //   (oldData) => {
+      //     if (!oldData) return oldData;
 
-    //       return {
-    //         ...oldData,
-    //         pages: oldData?.pages.map((page: any) => ({
-    //           ...page,
-    //           data: page?.data.filter(
-    //             (f: { id: string }) => f.id !== mutate.id,
-    //           ),
-    //         })),
-    //       };
-    //     },
-    //   );
+      //     return {
+      //       ...oldData,
+      //       pages: oldData?.pages.map((page: any) => ({
+      //         ...page,
+      //         data: page?.data.filter(
+      //           (f: { id: string }) => f.id !== mutate.id,
+      //         ),
+      //       })),
+      //     };
+      //   },
+      // );
 
-    //   return { prevTransactions };
-    // },
-    // onError: (error, _variables, context) => {
-    //   console.error(error);
-    //   if (context?.prevTransactions) {
-    //     queryClient.setQueryData(
-    //       queryKeyTransactions,
-    //       context.prevTransactions,
-    //     );
-    //   }
-    // },
+      return { prevStatistics, prevCarList };
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeyStatics,
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeyCarList,
+      });
+    },
+    onError: (error, _variables, context) => {
+      console.error(error);
+      if (context?.prevStatistics || context?.prevCarList) {
+        queryClient.setQueryData(queryKeyStatics, context.prevStatistics);
+        queryClient.setQueryData(queryKeyCarList, context.prevCarList);
+      }
+    },
   });
 
   return { postCar, isPendingPostCar };

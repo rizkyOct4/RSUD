@@ -60,7 +60,7 @@ export const POSTRentCar = async ({
     await tx.$executeRaw`
         INSERT INTO "car_return" (rental_id, total_days, total_cost, rental_user_id)
             VALUES
-        (${rentalId.id}::uuid, ${cTotalDays}, ${cTotalRent}, ${carOwner.user_id}::uuid)
+        (${rentalId.id}::uuid, ${cTotalDays}, ${cTotalRent}, (SELECT id FROM "user" WHERE public_id = ${publicId})::uuid)
     `;
   });
 };

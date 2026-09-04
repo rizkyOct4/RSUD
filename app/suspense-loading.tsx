@@ -18,7 +18,7 @@ export const SuspenseLoading = ({
               <div className="absolute inset-0 rounded-2xl bg-emerald-400/5" />
 
               <div className="relative h-10 w-10">
-                <Image
+                {/* <Image
                   src="/logo2.png"
                   alt="Monie Logo"
                   sizes="40px"
@@ -26,7 +26,7 @@ export const SuspenseLoading = ({
                   width={40}
                   height={40}
                   className="object-contain"
-                />
+                /> */}
               </div>
             </div>
 
