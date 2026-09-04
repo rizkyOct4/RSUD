@@ -23,5 +23,7 @@ export const POSTAuthDAL = async ({ key, body }: TRegisterParam) => {
         createdAt: post.createdAt,
       });
     }
+     default:
+      throw new Error("Invalid key");
   }
 };

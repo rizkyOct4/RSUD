@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 
 import {
   useQueryClient,
@@ -10,15 +9,10 @@ import axios from "axios";
 import { QueryKey } from "@tanstack/react-query";
 import { ROUTES_USER_PROVIDER } from "../../config-route/route.config";
 
-
-
 export const useMutationPostCar = (currentPath: string) => {
   const queryClient = useQueryClient();
 
-  const {
-    mutateAsync: postCar,
-    isPending: isPendingPostCar,
-  } = useMutation({
+  const { mutateAsync: postCar, isPending: isPendingPostCar } = useMutation({
     mutationFn: async (data) => {
       const URL = ROUTES_USER_PROVIDER.POST({
         key: "postCar",
@@ -71,9 +65,3 @@ export const useMutationPostCar = (currentPath: string) => {
 
   return { postCar, isPendingPostCar };
 };
-
-
-
-
-
-

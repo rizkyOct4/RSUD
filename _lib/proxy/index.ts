@@ -28,6 +28,41 @@ export const Authentication = (
       new URL(`/auth?redirect=${encodeURIComponent(pathname)}`, req.url),
     );
   }
+  return null;
+};
+
+export const UserModelAccess = (
+  req: NextRequest,
+  pathname: string,
+  publicId: string | null | undefined,
+  userModel: string | null | undefined,
+) => {
+  const PROVIDER_ACCESS = new Set(["/user-provider"]);
+
+  const CUSTOMER_ACCESS = new Set(["/user-customer"]);
+
+  let userAccess: Set<string>;
+
+  switch (userModel) {
+    case "PROVIDER":
+      userAccess = PROVIDER_ACCESS;
+      break;
+
+    case "CUSTOMER":
+      userAccess = CUSTOMER_ACCESS;
+      break;
+
+    default:
+      return NextResponse.redirect(new URL("/not-found", req.url));
+  }
+
+  const hasAccess = [...userAccess].some((path) => pathname.startsWith(path));
+
+  if (!hasAccess) {
+    return NextResponse.redirect(new URL("/not-found", req.url));
+  }
+
+  return null;
 };
 
 export const Forbidden = (
@@ -46,4 +81,5 @@ export const Forbidden = (
   if (origin !== null && !ALLOWED_ORIGINS.has(origin)) {
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   }
+  return null;
 };

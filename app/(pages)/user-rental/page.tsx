@@ -1,10 +1,7 @@
+import ModelReturnCar from "./components/model";
+
 const page = () => {
-    return (
-        <div>
-            MINE
-        </div>
-    )
-}
+  return <ModelReturnCar />;
+};
 
-
-export default page
+export default page;

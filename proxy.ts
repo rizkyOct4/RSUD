@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import GetSession from "./_util/session";
 import { cookies } from "next/headers";
-import { Authentication, Forbidden } from "./_lib/proxy";
+import { Authentication, Forbidden, UserModelAccess } from "./_lib/proxy";
 
 const proxy = async (req: NextRequest) => {
   const cookieStore = await cookies();
@@ -12,7 +12,7 @@ const proxy = async (req: NextRequest) => {
 
   const clientId = cookieStore.get("register-client-id")?.value;
 
-  const publicPaths = ["/auth", "/api/auth", "/_next/"];
+  const publicPaths = ["/auth", "/api/auth", "/api", "/_next/"];
 
   const publicUrl =
     (pathname === "/" ||
@@ -23,9 +23,9 @@ const proxy = async (req: NextRequest) => {
     return NextResponse.next();
   }
 
-  // const { publicId } = await GetSession();
   const session = await GetSession();
   const publicId = session?.publicId;
+  const userModel = session?.userModel;
 
   // ? CHECK AUTH =====
   const auth = Authentication(req, pathname, publicId);
@@ -34,6 +34,10 @@ const proxy = async (req: NextRequest) => {
   // ? FORBIDDEN =====
   const forb = Forbidden(req, clientId, publicId);
   if (forb) return forb;
+
+  // ? CHECK ACCESS =====
+  const access = UserModelAccess(req, pathname, publicId, userModel);
+  if (access) return access;
 
   const cspHeader = `
     default-src 'self';

@@ -2,11 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+
   experimental: {
+    globalNotFound: true,
     proxyClientMaxBodySize: "50mb", // contoh 50MB
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+  // cacheComponents: true,
+  // partialPrefetching: true,
   logging: {
     fetches: {
       fullUrl: true,

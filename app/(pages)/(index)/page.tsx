@@ -1,7 +1,7 @@
-import ModalBorrow from "./components";
+import ModalDashboard from "./components/modal";
 
 const Page = () => {
-  return <ModalBorrow />;
+  return <ModalDashboard />;
 };
 
 export default Page;

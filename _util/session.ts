@@ -23,6 +23,7 @@ const GetSession = cache(async () => {
     return {
       publicId,
       name,
+      userModel,
       verified: verified,
     };
   } else {

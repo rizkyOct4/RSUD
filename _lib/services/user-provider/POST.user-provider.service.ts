@@ -24,18 +24,17 @@ export const POSTUserProviderCar = async ({
 }: TPOSTUserProviderCarParam) => {
   return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     // ! CAR DATABASE
-    const [carId] = await tx.$queryRaw<{ id: string }[]>`
-      INSERT INTO "car" (brand, model, plate_number, daily_rate, created_at, updated_at, pb_id)
+    await tx.$executeRaw`
+      INSERT INTO "car" (brand, model, plate_number, daily_rate, created_at, updated_at, pb_id, user_id)
         VALUES
-      (${brand}, ${model}, ${plateNumber}, ${dailyRate}, ${createdAt}, ${createdAt}, ${pbId})
-      RETURNING id
+      (${brand}, ${model}, ${plateNumber}, ${dailyRate}, ${createdAt}, ${createdAt}, ${pbId}, (SELECT id FROM "user" WHERE public_id = ${publicId})::uuid)
       `;
 
-    // ! CAR RENTAL DATABASE
-    await tx.$executeRaw`
-        INSERT INTO "rental" (user_id, car_id)
-            VALUES
-        ((SELECT id FROM "user" WHERE public_id = ${publicId}), ${carId.id}::uuid )
-    `;
+    // // ! CAR RENTAL DATABASE
+    // await tx.$executeRaw`
+    //     INSERT INTO "rental" (user_id, car_id)
+    //         VALUES
+    //     ((SELECT id FROM "user" WHERE public_id = ${publicId}), ${carId.id}::uuid )
+    // `;
   });
 };

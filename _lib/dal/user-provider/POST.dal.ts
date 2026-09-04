@@ -39,5 +39,7 @@ export const POSTUserProviderDAL = async ({
         message: "Add New Car Rental Success",
       };
     }
+    default:
+      throw new Error("Invalid key");
   }
 };

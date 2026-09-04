@@ -31,9 +31,8 @@ const ModelAuth = () => {
     }
   }, [isOpen]);
 
-
   return (
-    <main className="min-h-screen px-4 py-10 sm:px-6 fixed inset-0">
+    <main className="min-h-screen px-4 py-10 sm:px-6 fixed inset-0 z-200 flex items-center justify-center bg-black/30 backdrop-blur-sm">
       <section className="mx-auto w-full max-w-4xl h-full overflow-y-scroll">
         {Render}
       </section>

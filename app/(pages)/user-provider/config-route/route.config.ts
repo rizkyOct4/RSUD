@@ -1,28 +1,78 @@
-// export type GetProps = {
-//   key: "profile";
-// };
+export type GetProps =
+  | {
+      key: "statistics";
+      currentPath: string;
+    }
+  | {
+      key: "carFilterBrand";
+      currentPath: string;
+      brand: string;
+      pageParam: number;
+      limit: number;
+    }
+  | {
+      key: "carFilterModel";
+      currentPath: string;
+      model: string;
+      pageParam: number;
+      limit: number;
+    }
+  | {
+      key: "carFilterBrandAndModel";
+      currentPath: string;
+      brand: string;
+      model: string;
+      pageParam: number;
+      limit: number;
+    }
+  | {
+      key: "car";
+      currentPath: string;
+      pageParam: number;
+      limit: number;
+    };
 export type PostProps = {
   key: "postCar";
-  currentPath: string
+  currentPath: string;
 };
 
 export const ROUTES_USER_PROVIDER = {
-  // GET: (props: GetProps) => {
-  //   const { key } = props;
-  //   const params = new URLSearchParams(); // ! karakter khusus akan otomatis di-encode. contoh: ayam & goreng
+  GET: (props: GetProps) => {
+    const { key, currentPath } = props;
+    const params = new URLSearchParams(); // ! karakter khusus akan otomatis di-encode. contoh: ayam & goreng
 
-  //   params.set("key", key);
+    params.set("key", key);
 
-  //   switch (key) {
-  //     case "profile":
-  //       break;
+    switch (key) {
+      case "statistics":
+        break;
+      case "carFilterBrand":
+        params.set("brand", props.brand);
+        params.set("page-param", String(props.pageParam));
+        params.set("limit", String(props.limit));
+        break;
+      case "carFilterModel":
+        params.set("model", props.model);
+        params.set("page-param", String(props.pageParam));
+        params.set("limit", String(props.limit));
+        break;
+      case "carFilterBrandAndModel":
+        params.set("brand", props.brand);
+        params.set("model", props.model);
+        params.set("page-param", String(props.pageParam));
+        params.set("limit", String(props.limit));
+        break;
+      case "car":
+        params.set("page-param", String(props.pageParam));
+        params.set("limit", String(props.limit));
+        break;
 
-  //     default:
-  //       return "";
-  //   }
+      default:
+        return "";
+    }
 
-  //   return `/auth/api?${params.toString()}`;
-  // },
+    return `${currentPath}/api?${params.toString()}`;
+  },
   POST: (props: PostProps) => {
     const { key, currentPath } = props;
     const params = new URLSearchParams(); // ! karakter khusus akan otomatis di-encode. contoh: ayam & goreng

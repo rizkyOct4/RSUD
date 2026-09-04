@@ -5,7 +5,7 @@ import { ErrorTypes } from "@/_util/types.error";
 type TAuthKey = "profile";
 export type TAuthParam = {
   key: TAuthKey;
-  params: any;
+  params: URLSearchParams;
 };
 
 export async function GET(req: NextRequest) {

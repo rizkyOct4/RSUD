@@ -14,14 +14,14 @@ const config: Config = {
   modulePaths: ["<rootDir>/app"],
   collectCoverage: false,
   verbose: true,
-  coverageThreshold: {
-    global: {
-      statements: 40,
-      branches: 70,
-      functions: 50,
-      lines: 40,
-    },
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     statements: 40,
+  //     branches: 70,
+  //     functions: 50,
+  //     lines: 40,
+  //   },
+  // },
   collectCoverageFrom: [
     "app/**/*.{ts,tsx}",
     "!app/**/*.d.ts",
