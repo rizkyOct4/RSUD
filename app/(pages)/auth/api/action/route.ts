@@ -10,8 +10,8 @@ export type TRegisterParam = {
   body: {
     name: string;
     address: string;
-    phoneNumber: number;
-    sim: number;
+    phoneNumber: string;
+    sim: string;
     password: string;
     confirmPassword: string;
     userModel: string;
@@ -35,11 +35,9 @@ export async function POST(req: NextRequest) {
     const key = req.nextUrl.searchParams.get("key") as TKey;
     const body = await req.json();
 
-    await POSTAuthDAL({ key, body });
+    const result = await POSTAuthDAL({ key, body });
 
-    const response = NextResponse.json({
-      message: "Register Success",
-    });
+    const response = NextResponse.json(result);
 
     if (isNewClient) {
       response.cookies.set("register-client-id", clientId, {

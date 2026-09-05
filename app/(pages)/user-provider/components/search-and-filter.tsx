@@ -34,7 +34,6 @@ const SearchAndFilter = () => {
           </label>
 
           <select
-            // id="brand"
             value={carFilter.brand}
             onChange={(e) =>
               setCarFilter({
@@ -43,7 +42,6 @@ const SearchAndFilter = () => {
               })
             }
             className="h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 outline-none focus:border-zinc-900"
-            defaultValue=""
           >
             <option value="">Semua Merek</option>
             <option value="Toyota">Toyota</option>

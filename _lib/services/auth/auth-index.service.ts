@@ -57,8 +57,8 @@ export const CredentialRegister = async ({
 }: {
   name: string;
   address: string;
-  phoneNumber: number;
-  sim: number;
+  phoneNumber: string;
+  sim: string;
   password: string;
   userModel: string;
   createdAt: Date;

@@ -12,10 +12,12 @@ import { ROUTES_DASHBOARD } from "../../config-route/route.config";
 
 type TUseMutationPostRentCar = {
   queryKeyRentCar: QueryKey;
+  queryKeySearchRentCar: QueryKey;
 };
 
 export const useMutationPostRentCar = ({
   queryKeyRentCar,
+  queryKeySearchRentCar,
 }: TUseMutationPostRentCar) => {
   const queryClient = useQueryClient();
 
@@ -31,9 +33,13 @@ export const useMutationPostRentCar = ({
       onMutate: async (mutate: any) => {
         await Promise.all([
           queryClient.cancelQueries({ queryKey: queryKeyRentCar }),
+          queryClient.cancelQueries({ queryKey: queryKeySearchRentCar }),
         ]);
 
         const prevRentCar = queryClient.getQueryData(queryKeyRentCar);
+        const prevSearchRentCar = queryClient.getQueryData(
+          queryKeySearchRentCar,
+        );
 
         // queryClient.setQueryData<InfiniteData<TransactionsDataType[]>>(
         //   queryKeyTransactions,
@@ -52,14 +58,25 @@ export const useMutationPostRentCar = ({
         //   },
         // );
 
-        return { prevRentCar };
+        return { prevRentCar, prevSearchRentCar };
+      },
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries({
+          queryKey: queryKeyRentCar,
+        });
+        queryClient.invalidateQueries({
+          queryKey: queryKeySearchRentCar,
+        });
       },
       onError: (error, _variables, context) => {
         console.error(error);
         if (context?.prevRentCar) {
+          queryClient.setQueryData(queryKeyRentCar, context.prevRentCar);
+        }
+        if (context?.prevSearchRentCar) {
           queryClient.setQueryData(
-            queryKeyRentCar,
-            context.prevRentCar,
+            queryKeySearchRentCar,
+            context.prevSearchRentCar,
           );
         }
       },

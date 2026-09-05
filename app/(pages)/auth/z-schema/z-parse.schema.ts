@@ -4,8 +4,8 @@ import { z } from "zod";
 export const zRegisterFormParseSchema = z.object({
   name: z.string().trim().max(1000),
   address: z.string().min(0).max(50, "* Max 50 Characters"),
-  phoneNumber: z.number().int().positive(),
-  sim: z.number().int().positive(),
+  phoneNumber: z.string().max(50),
+  sim: z.string().max(50),
   password: z.string().min(8, "* Password must be at least 8 characters"),
   confirmPassword: z.string(),
   userModel: z.string(),

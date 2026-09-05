@@ -12,6 +12,7 @@ export const useDashboardHookIndex = (
 
   const MPostRentCar = useMutationPostRentCar({
     queryKeyRentCar: QGetDashboardCarList.queryKeyDashboardRentCar,
+    queryKeySearchRentCar: QGetDashboardSearchCarList.queryKeyDashboardSearchRentCar,
   });
 
   return {

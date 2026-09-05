@@ -88,9 +88,9 @@ export const useQueryDashboardSearchCarList = (publicId: string) => {
   let queryKey;
 
   if (publicId) {
-    queryKey = ["keyDashboardSearchCarList", publicId, carFilter];
+    queryKey = ["keyDashboardSearchCarList", publicId, carFilter.brand];
   } else {
-    queryKey = ["keyDashboardSearchCarList", carFilter];
+    queryKey = ["keyDashboardSearchCarList", carFilter.brand];
   }
 
   const limit = 10;
@@ -145,7 +145,7 @@ export const useQueryDashboardSearchCarList = (publicId: string) => {
     IFNPCarList,
     isErrorCar,
     errorCar,
-    queryKeyDashboardRentCar: queryKey,
+    queryKeyDashboardSearchRentCar: queryKey,
     carLimit: limit,
     carFilter, setCarFilter
   };

@@ -1,8 +1,14 @@
+import Modal from "./components/modal";
+import GetSession from "@/_util/session";
+import { notFound } from "next/navigation";
 
-import Modal from "./components/modal"
+const page = async () => {
+  const session = await GetSession();
+  const publicId = session?.publicId;
 
-const page = () => {
-  return <Modal />
-}
+  if (!publicId) return notFound();
 
-export default page
+  return <Modal />;
+};
+
+export default page;

@@ -41,8 +41,8 @@ const RegisterForm = ({ onBack }: TRegisterFormProps) => {
       const URL = ROUTES_AUTH.POST({ key: "register" });
       const res = axios.post(URL, {
         ...values,
-        phoneNumber: Number(values.phoneNumber),
-        sim: Number(values.sim),
+        phoneNumber: values.phoneNumber,
+        sim: values.sim,
         createdAt: new Date(),
       });
 

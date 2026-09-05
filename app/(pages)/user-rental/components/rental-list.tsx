@@ -67,20 +67,40 @@ const RentalList = ({ setState }: any) => {
                   </div>
 
                   {/* Return Button */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setState({
-                        isOpen: true,
-                        carId: rental.carPublicId,
-                        id: rental.id,
-                        plateNumber: rental.plateNumber,
-                      });
-                    }}
-                    className="mt-5 h-11 w-full rounded-lg bg-zinc-900 text-sm font-medium text-white transition hover:bg-zinc-800"
-                  >
-                    Kembalikan Mobil
-                  </button>
+                  {rental.status === "CONFIRM" && (
+                    <button
+                      type="button"
+                      onClick={() => console.log("Delete")}
+                      className="mt-5 h-11 w-full rounded-lg bg-zinc-900 text-sm font-medium text-white transition hover:bg-zinc-800"
+                    >
+                      Hapus
+                    </button>
+                  )}
+                  {rental.status === "REQUEST" && (
+                    <button
+                      type="button"
+                      onClick={() => console.log("On Process")}
+                      className="mt-5 h-11 w-full rounded-lg bg-zinc-900 text-sm font-medium text-white transition hover:bg-zinc-800"
+                    >
+                      Dalam Prosess
+                    </button>
+                  )}
+                  {!rental.status && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setState({
+                          isOpen: true,
+                          carId: rental.carPublicId,
+                          id: rental.id,
+                          plateNumber: rental.plateNumber,
+                        });
+                      }}
+                      className="mt-5 h-11 w-full rounded-lg bg-zinc-900 text-sm font-medium text-white transition hover:bg-zinc-800"
+                    >
+                      Kembalikan Mobil
+                    </button>
+                  )}
                 </div>
               ))
             : null}

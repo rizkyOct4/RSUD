@@ -27,7 +27,6 @@ const proxy = async (req: NextRequest) => {
   const session = await GetSession();
   const publicId = session?.publicId;
   const userModel = session?.userModel;
-  // console.log(userModel)
 
   // ? CHECK AUTH =====
   const auth = Authentication(req, pathname, publicId);

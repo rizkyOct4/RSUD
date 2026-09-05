@@ -13,7 +13,7 @@ export const POSTAuthDAL = async ({ key, body }: TRegisterParam) => {
 
       const post = parsed.data;
 
-      return await CredentialRegister({
+      await CredentialRegister({
         name: post.name,
         address: post.address,
         phoneNumber: post.phoneNumber,
@@ -22,6 +22,10 @@ export const POSTAuthDAL = async ({ key, body }: TRegisterParam) => {
         userModel: post.userModel,
         createdAt: post.createdAt,
       });
+
+      return {
+        message: "Register Success"
+      }
     }
      default:
       throw new Error("Invalid key");

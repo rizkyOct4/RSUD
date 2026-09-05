@@ -1,13 +1,15 @@
 import { prisma } from "@/_lib/prisma/prisma-client";
 import camelcaseKeys from "camelcase-keys";
 
-
 // * CAR LIST =======
 type TGETDashboardCarList = {
   limit: number;
   offset: number;
 };
-export const GETDashboardCarList = async ({ limit, offset }: TGETDashboardCarList) => {
+export const GETDashboardCarList = async ({
+  limit,
+  offset,
+}: TGETDashboardCarList) => {
   const query = await prisma.$queryRaw<{
     brand: string;
     model: string;

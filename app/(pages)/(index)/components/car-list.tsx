@@ -3,6 +3,8 @@
 import { DashboardContext } from "@/app/context/context";
 import { useContext, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import CarCardSkeleton from "../skeleton/car-list.skeleton";
+import Error from "../error";
 
 type TCarListDashboard = {
   setIsRented: any;
@@ -17,15 +19,21 @@ const CarListDashboard = ({ setIsRented }: TCarListDashboard) => {
     isFCarListData,
     DashboardSearchCarListData,
     isFSearchCarListData,
+    isError,
+    errorCar,
   } = useContext(DashboardContext);
-
-  // const availableCars = DashboardCarListData.filter(
-  //   (car: { status: string }) => car?.status === "ACTIVE",
-  // );
 
   const dataUsed = carFilter.brand
     ? DashboardSearchCarListData
     : DashboardCarListData;
+
+  const availableCars = dataUsed.filter(
+    (car: { status: string }) => car?.status === "ACTIVE",
+  );
+
+  if (isError) {
+    return <Error error={errorCar} />;
+  }
 
   return (
     <section>
@@ -39,21 +47,20 @@ const CarListDashboard = ({ setIsRented }: TCarListDashboard) => {
             Pilih mobil yang sesuai dengan kebutuhan Anda.
           </p>
         </div>
-        {/* 
+
         <span className="text-sm text-zinc-500">
           {availableCars.length} tersedia
-        </span> */}
+        </span>
       </div>
 
       {/* Cars */}
       <div className="flex flex-wrap gap-4">
         <>
           {isFCarListData || isFSearchCarListData ? (
-            <p>Loading ... </p>
+            <CarCardSkeleton length={4} />
           ) : (
             <>
-              {Array.isArray(dataUsed) &&
-                dataUsed.length > 0 &&
+              {Array.isArray(dataUsed) && dataUsed.length > 0 ? (
                 dataUsed.map((car) => (
                   <article
                     key={car?.pbId}
@@ -108,7 +115,12 @@ const CarListDashboard = ({ setIsRented }: TCarListDashboard) => {
                       Pilih Mobil
                     </button>
                   </article>
-                ))}
+                ))
+              ) : (
+                <div className="flex w-full items-center justify-center py-12">
+                  <p className="text-sm text-zinc-500">Tidak ada data mobil.</p>
+                </div>
+              )}
             </>
           )}
         </>

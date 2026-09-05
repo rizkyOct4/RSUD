@@ -11,21 +11,6 @@ export type GetProps =
       limit: number;
     }
   | {
-      key: "carFilterModel";
-      currentPath: string;
-      model: string;
-      pageParam: number;
-      limit: number;
-    }
-  | {
-      key: "carFilterBrandAndModel";
-      currentPath: string;
-      brand: string;
-      model: string;
-      pageParam: number;
-      limit: number;
-    }
-  | {
       key: "car";
       currentPath: string;
       pageParam: number;
@@ -33,6 +18,10 @@ export type GetProps =
     };
 export type PostProps = {
   key: "postCar";
+  currentPath: string;
+};
+export type PutProps = {
+  key: "confirmCarReturn";
   currentPath: string;
 };
 
@@ -48,17 +37,6 @@ export const ROUTES_USER_PROVIDER = {
         break;
       case "carFilterBrand":
         params.set("brand", props.brand);
-        params.set("page-param", String(props.pageParam));
-        params.set("limit", String(props.limit));
-        break;
-      case "carFilterModel":
-        params.set("model", props.model);
-        params.set("page-param", String(props.pageParam));
-        params.set("limit", String(props.limit));
-        break;
-      case "carFilterBrandAndModel":
-        params.set("brand", props.brand);
-        params.set("model", props.model);
         params.set("page-param", String(props.pageParam));
         params.set("limit", String(props.limit));
         break;
@@ -81,6 +59,21 @@ export const ROUTES_USER_PROVIDER = {
 
     switch (key) {
       case "postCar":
+        break;
+      default:
+        return "";
+    }
+
+    return `${currentPath}/api/action?${params.toString()}`;
+  },
+  PUT: (props: PutProps) => {
+    const { key, currentPath } = props;
+    const params = new URLSearchParams(); // ! karakter khusus akan otomatis di-encode. contoh: ayam & goreng
+
+    params.set("key", key);
+
+    switch (key) {
+      case "confirmCarReturn":
         break;
       default:
         return "";

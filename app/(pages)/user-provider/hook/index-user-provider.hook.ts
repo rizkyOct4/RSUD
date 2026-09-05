@@ -5,6 +5,7 @@ import {
   useQueryCarList,
 } from "./query/user-provider-query.query";
 import { useMutationPostCar } from "./mutation/POST.mutation";
+import { useMutationConfirmReturnCar } from "./mutation/PUT.mutation";
 
 export const useUserCarProviderHookIndex = (
   publicId: string,
@@ -20,10 +21,17 @@ export const useUserCarProviderHookIndex = (
     queryKeyCarList: QGetCarList.queryKeyCarList,
   });
 
+  const MPutCar = useMutationConfirmReturnCar({
+    currentPath: currentPath,
+    queryKeyStatics: QGetStatistics.queryKeyCarListStatisc,
+    queryKeyCarList: QGetCarList.queryKeyCarList,
+  });
+
   return {
     ...QGetStatistics,
     ...QGetFilter,
     ...QGetCarList,
     ...MPostCar,
+    ...MPutCar,
   };
 };

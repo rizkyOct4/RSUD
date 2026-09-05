@@ -43,7 +43,7 @@ const ReturnCarConfirmForm = ({
         await res;
         // console.log(post);
         setIsSubmit(false);
-        onBack()
+        onBack();
       } catch (err) {
         setIsSubmit(false);
         console.error(err);

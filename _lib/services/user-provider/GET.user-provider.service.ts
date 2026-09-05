@@ -210,10 +210,13 @@ export const GETCarList = async ({ publicId, limit, offset }: TGETCarList) => {
     plate_number: string;
     daily_rate: string;
     pb_id: string;
+    status_request: string;
   }>`
     SELECT
-    c.brand, c.model, c.plate_number, c.daily_rate, c.pb_id, c.status
+    c.brand, c.model, c.plate_number, c.daily_rate, c.pb_id, c.status, cr.status AS status_request
       FROM "car" c
+    JOIN "rental" r ON (r.car_id = c.id)
+    JOIN "car_return" cr ON (cr.rental_id = r.id)
     WHERE c.user_id = (SELECT id FROM "user" WHERE public_id = ${publicId})
     ORDER BY c.created_at DESC
     LIMIT ${limit}

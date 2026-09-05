@@ -86,54 +86,54 @@ export const useQueryCarFilter = (publicId: string, currentPath: string) => {
   });
 
   //  * Model
-  const {
-    data: CarFilterModel,
-    isFetching: isFCarFilterModel,
-    refetch: carFilterModelRefetch,
-    fetchNextPage: FNPCarFilterModel,
-    hasNextPage: HNPCarFilterModel,
-    isFetchingNextPage: IFNPCarFilterModel,
-    isError: isErrorCarFilterModel,
-    error: errorCarFilterModel,
-  } = useInfiniteQuery({
-    queryKey: ["keyCarFilterModel", publicId, carFilter.model],
-    queryFn: async ({ pageParam = 1 }) => {
-      const URL = ROUTES_USER_PROVIDER.GET({
-        key: "carFilterModel",
-        currentPath: currentPath,
-        model: carFilter.model,
-        pageParam: pageParam,
-        limit: limit,
-      });
-      const { data } = await axios.get(URL);
-      return data;
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.hasMore ? allPages.length + 1 : undefined;
-    },
-    staleTime: 1000 * 60 * 10,
-    gcTime: 1000 * 60 * 60,
-    initialPageParam: 1,
-    enabled:
-      !!publicId && currentPath === "/user-provider" && !!carFilter.model,
-    placeholderData: keepPreviousData,
-    refetchOnWindowFocus: false, // Tidak refetch saat kembali ke aplikasi
-    refetchOnMount: false, // "always" => refetch jika stale saja
-    retry: false,
-    throwOnError: (error: any) => {
-      return error.status === 500;
-    },
-  });
+  // const {
+  //   data: CarFilterModel,
+  //   isFetching: isFCarFilterModel,
+  //   refetch: carFilterModelRefetch,
+  //   fetchNextPage: FNPCarFilterModel,
+  //   hasNextPage: HNPCarFilterModel,
+  //   isFetchingNextPage: IFNPCarFilterModel,
+  //   isError: isErrorCarFilterModel,
+  //   error: errorCarFilterModel,
+  // } = useInfiniteQuery({
+  //   queryKey: ["keyCarFilterModel", publicId, carFilter.model],
+  //   queryFn: async ({ pageParam = 1 }) => {
+  //     const URL = ROUTES_USER_PROVIDER.GET({
+  //       key: "carFilterModel",
+  //       currentPath: currentPath,
+  //       model: carFilter.model,
+  //       pageParam: pageParam,
+  //       limit: limit,
+  //     });
+  //     const { data } = await axios.get(URL);
+  //     return data;
+  //   },
+  //   getNextPageParam: (lastPage, allPages) => {
+  //     return lastPage?.hasMore ? allPages.length + 1 : undefined;
+  //   },
+  //   staleTime: 1000 * 60 * 10,
+  //   gcTime: 1000 * 60 * 60,
+  //   initialPageParam: 1,
+  //   enabled:
+  //     !!publicId && currentPath === "/user-provider" && !!carFilter.model,
+  //   placeholderData: keepPreviousData,
+  //   refetchOnWindowFocus: false, // Tidak refetch saat kembali ke aplikasi
+  //   refetchOnMount: false, // "always" => refetch jika stale saja
+  //   retry: false,
+  //   throwOnError: (error: any) => {
+  //     return error.status === 500;
+  //   },
+  // });
 
   const CarFilterBrandData = useMemo(
     () => CarFilterBrand?.pages.flatMap((page) => page.data) ?? [],
     [CarFilterBrand?.pages],
   );
 
-  const CarFilterModelData = useMemo(
-    () => CarFilterModel?.pages.flatMap((page) => page.data) ?? [],
-    [CarFilterModel?.pages],
-  );
+  // const CarFilterModelData = useMemo(
+  //   () => CarFilterModel?.pages.flatMap((page) => page.data) ?? [],
+  //   [CarFilterModel?.pages],
+  // );
 
   return {
     // * FILTER BRAND ====
@@ -148,15 +148,15 @@ export const useQueryCarFilter = (publicId: string, currentPath: string) => {
     queryKeyCarFilterBrand: ["keyCarFilterBrand", publicId, carFilter.brand],
 
     // * FILTER MODEL ====
-    CarFilterModelData,
-    isFCarFilterModel,
-    carFilterModelRefetch,
-    FNPCarFilterModel,
-    HNPCarFilterModel,
-    IFNPCarFilterModel,
-    isErrorCarFilterModel,
-    errorCarFilterModel,
-    queryKeyCarFilterModel: ["keyCarFilterModel", publicId, carFilter.model],
+    // CarFilterModelData,
+    // isFCarFilterModel,
+    // carFilterModelRefetch,
+    // FNPCarFilterModel,
+    // HNPCarFilterModel,
+    // IFNPCarFilterModel,
+    // isErrorCarFilterModel,
+    // errorCarFilterModel,
+    // queryKeyCarFilterModel: ["keyCarFilterModel", publicId, carFilter.model],
 
     carLimit: limit,
     carFilter,
