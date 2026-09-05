@@ -10,16 +10,16 @@ interface UserCarRentalProps {
   children: ReactNode;
 }
 
-const UserCarRental: React.FC<UserCarRentalProps> = ({ children }) => {
+const UserCarRentalProvider: React.FC<UserCarRentalProps> = ({ children }) => {
   const { publicId } = useSessionClient();
 
-      const currentPath = usePathname();
+  const currentPath = usePathname();
   //   //   //   const currentPath = pathname.split("/")[2];
-    const index = useUserCarRentalHookIndex(publicId, currentPath);
+  const index = useUserCarRentalHookIndex(publicId, currentPath);
 
-    const values = {
-      ...index,
-    };
+  const values = {
+    ...index,
+  };
 
   return (
     <UserCarRentalContext.Provider value={values}>
@@ -28,4 +28,4 @@ const UserCarRental: React.FC<UserCarRentalProps> = ({ children }) => {
   );
 };
 
-export default UserCarRental;
+export default UserCarRentalProvider;

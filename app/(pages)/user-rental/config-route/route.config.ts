@@ -9,8 +9,8 @@ export type GetProps =
       pageParam: number;
       limit: number;
     };
-export type PostProps = {
-  key: "postCar";
+export type PutProps = {
+  key: "putReturnCarRental";
   currentPath: string;
 };
 
@@ -35,14 +35,14 @@ export const ROUTES_USER_RENTAL = {
 
     return `${currentPath}/api?${params.toString()}`;
   },
-  POST: (props: PostProps) => {
+  PUT: (props: PutProps) => {
     const { key, currentPath } = props;
     const params = new URLSearchParams(); // ! karakter khusus akan otomatis di-encode. contoh: ayam & goreng
 
     params.set("key", key);
 
     switch (key) {
-      case "postCar":
+      case "putReturnCarRental":
         break;
       default:
         return "";

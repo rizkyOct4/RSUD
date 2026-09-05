@@ -76,7 +76,7 @@ model Rental {
   user User @relation(fields: [user_id], references: [id],  onDelete: Cascade)
   car  Car  @relation(fields: [car_id], references: [id],  onDelete: Cascade)
 
-  return CarReturn?
+  return CarReturn[]
 
   @@index([user_id])
   @@index([car_id])
@@ -87,10 +87,10 @@ model Rental {
 }
 
 model CarReturn {
-  id String @unique @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
   rental_user_id String  @db.Uuid
-  rental_id String  @id @db.Uuid
+  rental_id String  @db.Uuid
 
   return_date DateTime?
   total_days  Int

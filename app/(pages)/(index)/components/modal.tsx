@@ -3,7 +3,6 @@
 import HeaderDashboard from "./header";
 import SearchDashboard from "./search";
 import CarListDashboard from "./car-list";
-// import RentCarForm from "./form/rented";
 import { useState, useMemo } from "react";
 
 import dynamic from "next/dynamic";
@@ -24,7 +23,7 @@ const ModalDashboard = () => {
 
   const render = useMemo(() => {
     if (isRented.open) {
-      return <LazyRentCarForm isRented={isRented} setIsRented={setIsRented}/>;
+      return <LazyRentCarForm isRented={isRented} setIsRented={setIsRented} />;
     }
   }, [isRented]);
 
@@ -33,9 +32,6 @@ const ModalDashboard = () => {
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
         {/* Header */}
         <HeaderDashboard />
-
-        {/* Search */}
-        <SearchDashboard />
 
         {/* Available Cars */}
         <CarListDashboard setIsRented={setIsRented} />

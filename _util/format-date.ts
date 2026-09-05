@@ -6,6 +6,14 @@ export const FormatDate = (value: Date) => {
   });
 };
 
+export const formatLocalDate = (date: string) => {
+  return new Date(date).toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}; // ? 05/09/2026 - 08/09/2026
+
 export const ConvertDateLocalIntoDate = (dateLocal: Date):string => {
   const converted = [
     dateLocal.getFullYear(),

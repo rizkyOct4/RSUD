@@ -125,55 +125,6 @@ export const useQueryCarFilter = (publicId: string, currentPath: string) => {
     },
   });
 
-  //  * Brand And Model
-  const {
-    data: CarFilterBrandAndModel,
-    isFetching: isFCarFilterBrandAndModel,
-    refetch: carFilterBrandAndModelRefetch,
-    fetchNextPage: FNPCarFilterBrandAndModel,
-    hasNextPage: HNPCarFilterBrandAndModel,
-    isFetchingNextPage: IFNPCarFilterBrandAndModel,
-    isError: isErrorCarFilterBrandAndModel,
-    error: errorCarFilterBrandAndModel,
-  } = useInfiniteQuery({
-    queryKey: [
-      "keyCarFilterBrandAndModel",
-      publicId,
-      carFilter.brand,
-      carFilter.model,
-    ],
-    queryFn: async ({ pageParam = 1 }) => {
-      const URL = ROUTES_USER_PROVIDER.GET({
-        key: "carFilterBrandAndModel",
-        currentPath: currentPath,
-        brand: carFilter.brand,
-        model: carFilter.model,
-        pageParam: pageParam,
-        limit: limit,
-      });
-      const { data } = await axios.get(URL);
-      return data;
-    },
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.hasMore ? allPages.length + 1 : undefined;
-    },
-    staleTime: 1000 * 60 * 10,
-    gcTime: 1000 * 60 * 60,
-    initialPageParam: 1,
-    enabled:
-      !!publicId &&
-      currentPath === "/user-provider" &&
-      !!carFilter.brand &&
-      !!carFilter.model,
-    placeholderData: keepPreviousData,
-    refetchOnWindowFocus: false, // Tidak refetch saat kembali ke aplikasi
-    refetchOnMount: false, // "always" => refetch jika stale saja
-    retry: false,
-    throwOnError: (error: any) => {
-      return error.status === 500;
-    },
-  });
-
   const CarFilterBrandData = useMemo(
     () => CarFilterBrand?.pages.flatMap((page) => page.data) ?? [],
     [CarFilterBrand?.pages],
@@ -182,11 +133,6 @@ export const useQueryCarFilter = (publicId: string, currentPath: string) => {
   const CarFilterModelData = useMemo(
     () => CarFilterModel?.pages.flatMap((page) => page.data) ?? [],
     [CarFilterModel?.pages],
-  );
-
-  const CarFilterBrandAndModelData = useMemo(
-    () => CarFilterBrandAndModel?.pages.flatMap((page) => page.data) ?? [],
-    [CarFilterBrandAndModel?.pages],
   );
 
   return {
@@ -211,22 +157,6 @@ export const useQueryCarFilter = (publicId: string, currentPath: string) => {
     isErrorCarFilterModel,
     errorCarFilterModel,
     queryKeyCarFilterModel: ["keyCarFilterModel", publicId, carFilter.model],
-
-    // * FILTER BRAND AND MODEL ====
-    CarFilterBrandAndModelData,
-    isFCarFilterBrandAndModel,
-    carFilterBrandAndModelRefetch,
-    FNPCarFilterBrandAndModel,
-    HNPCarFilterBrandAndModel,
-    IFNPCarFilterBrandAndModel,
-    isErrorCarFilterBrandAndModel,
-    errorCarFilterBrandAndModel,
-    queryKeyCarFilterBrandAndModel: [
-      "keyCarFilterBrandAndModel",
-      publicId,
-      carFilter.brand,
-      carFilter.model,
-    ],
 
     carLimit: limit,
     carFilter,

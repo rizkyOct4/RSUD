@@ -1,6 +1,6 @@
 "use client";
 
-import { useQueryDashboardCarList } from "./query/dashboard-query.query";
+import { useQueryDashboardCarList, useQueryDashboardSearchCarList } from "./query/dashboard-query.query";
 import { useMutationPostRentCar } from "./mutation/POST-dashboard.mutation";
 
 export const useDashboardHookIndex = (
@@ -8,8 +8,7 @@ export const useDashboardHookIndex = (
   // currentPath: string,
 ) => {
   const QGetDashboardCarList = useQueryDashboardCarList(publicId);
-  // const QGetFilter = useQueryCarFilter(publicId, currentPath);
-  // const QGetCarList = useQueryCarList(publicId, currentPath);
+  const QGetDashboardSearchCarList = useQueryDashboardSearchCarList(publicId);
 
   const MPostRentCar = useMutationPostRentCar({
     queryKeyRentCar: QGetDashboardCarList.queryKeyDashboardRentCar,
@@ -17,6 +16,7 @@ export const useDashboardHookIndex = (
 
   return {
     ...QGetDashboardCarList,
+    ...QGetDashboardSearchCarList,
     // ...QGetFilter,
     // ...QGetCarList,
     ...MPostRentCar,

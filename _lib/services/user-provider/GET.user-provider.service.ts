@@ -7,9 +7,9 @@ export const GETStatistics = async ({
 }: {
   publicId: string | undefined;
 }) => {
-const query = await prisma.$queryRaw<
-  { amount_car: number; amount_available: number }[]
->`
+  const query = await prisma.$queryRaw<
+    { amount_car: number; amount_available: number }[]
+  >`
   SELECT
     (
       SELECT COALESCE(COUNT(id), 0)::INTEGER
@@ -34,6 +34,17 @@ const query = await prisma.$queryRaw<
     ) AS amount_car_rented,
 
     (
+      SELECT COALESCE(COUNT(id), 0)::INTEGER
+      FROM "car"
+      WHERE user_id = (
+        SELECT id
+        FROM "user"
+        WHERE public_id = ${publicId}
+      )
+      AND status = 'RETURNED'::"CarStatus"
+    ) AS amount_car_returned,
+
+    (
       SELECT COUNT(*)::INTEGER
       FROM "car" c
       WHERE c.user_id = (
@@ -48,6 +59,39 @@ const query = await prisma.$queryRaw<
 
 // * FILTER =======
 // ? Brand =======
+export const GETFilterPublicBrand = async ({
+  brand,
+  limit,
+  offset,
+}: any) => {
+  const query = await prisma.$queryRaw<{
+    brand: string;
+    model: string;
+    plate_number: string;
+    daily_rate: string;
+    pb_id: string;
+  }>`
+    SELECT
+    c.brand, c.model, c.plate_number, c.daily_rate, c.pb_id, c.status
+      FROM "car" c
+    WHERE c.brand = ${brand}
+    ORDER BY c.created_at DESC
+    LIMIT ${limit}
+    OFFSET ${offset}
+    `;
+
+  const queryCheck = await prisma.$queryRaw<{ amount_id: number }[]>`
+    SELECT COALESCE(COUNT(id), 0) AS amount_id
+      FROM "car"
+      WHERE brand = ${brand}
+    `;
+
+  const data = camelcaseKeys(query);
+  const hasMore = Number(queryCheck[0].amount_id) > limit + offset;
+
+  return { data, hasMore };
+};
+
 export const GETFilterBrand = async ({
   publicId,
   brand,
@@ -61,9 +105,9 @@ export const GETFilterBrand = async ({
     daily_rate: string;
     pb_id: string;
   }>`
-    SELECT c.brand, c.model, c.plate_number, c.daily_rate, c.pb_id, r.status
+    SELECT
+    c.brand, c.model, c.plate_number, c.daily_rate, c.pb_id, c.status
       FROM "car" c
-      JOIN "rental" r ON (r.user_id = (SELECT id FROM "user" WHERE public_id = ${publicId}))
     WHERE c.user_id = (SELECT id FROM "user" WHERE public_id = ${publicId}) AND c.brand = ${brand}
     ORDER BY c.created_at DESC
     LIMIT ${limit}
@@ -73,7 +117,9 @@ export const GETFilterBrand = async ({
   const queryCheck = await prisma.$queryRaw<{ amount_id: number }[]>`
     SELECT COALESCE(COUNT(id), 0) AS amount_id
       FROM "car"
-    WHERE user_id = (SELECT id FROM "user" WHERE public_id = ${publicId})`;
+    WHERE user_id = (SELECT id FROM "user" WHERE public_id = ${publicId})
+      AND brand = ${brand}
+    `;
 
   const data = camelcaseKeys(query);
   const hasMore = Number(queryCheck[0].amount_id) > limit + offset;

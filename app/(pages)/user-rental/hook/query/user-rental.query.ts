@@ -6,7 +6,6 @@ import {
   keepPreviousData,
 } from "@tanstack/react-query";
 import axios from "axios";
-// import { ROUTES_USER_PROVIDER } from "../../config-route/route.config";
 import { ROUTES_USER_RENTAL } from "../../config-route/route.config";
 import { useMemo, useState } from "react";
 
@@ -14,7 +13,7 @@ export const useQueryCarRentalList = (publicId: string, currentPath: string) => 
   const limit = 10;
   const {
     data: carRentListData,
-    isFetching: isFCarRentListData,
+    isFetching: isFCarRentalListData,
     refetch: carListRefetch,
     fetchNextPage: FNPCarList,
     hasNextPage: HNPCarList,
@@ -49,14 +48,14 @@ export const useQueryCarRentalList = (publicId: string, currentPath: string) => 
     },
   });
 
-  const CarRentListData = useMemo(
+  const CarRentalListData = useMemo(
     () => carRentListData?.pages.flatMap((page) => page.data) ?? [],
     [carRentListData?.pages],
   );
 
   return {
-    CarRentListData,
-    isFCarRentListData,
+    CarRentalListData,
+    isFCarRentalListData,
     carListRefetch,
     FNPCarList,
     HNPCarList,

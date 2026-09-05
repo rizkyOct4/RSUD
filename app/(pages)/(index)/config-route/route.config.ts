@@ -8,34 +8,33 @@ export type GetProps =
   //     key: "statistics";
   //     currentPath: string;
   //   }
-  // | {
-  //     key: "carFilterBrand";
-  //     currentPath: string;
-  //     brand: string;
-  //     pageParam: number;
-  //     limit: number;
-  //   }
-  // | {
-  //     key: "carFilterModel";
-  //     currentPath: string;
-  //     model: string;
-  //     pageParam: number;
-  //     limit: number;
-  //   }
-  // | {
-  //     key: "carFilterBrandAndModel";
-  //     currentPath: string;
-  //     brand: string;
-  //     model: string;
-  //     pageParam: number;
-  //     limit: number;
-  //   }
-  // | {
-  //     key: "car";
-  //     currentPath: string;
-  //     pageParam: number;
-  //     limit: number;
-  //   };
+  | {
+      key: "carFilterBrand";
+      brand: string;
+      pageParam: number;
+      limit: number;
+    };
+// | {
+//     key: "carFilterModel";
+//     currentPath: string;
+//     model: string;
+//     pageParam: number;
+//     limit: number;
+//   }
+// | {
+//     key: "carFilterBrandAndModel";
+//     currentPath: string;
+//     brand: string;
+//     model: string;
+//     pageParam: number;
+//     limit: number;
+//   }
+// | {
+//     key: "car";
+//     currentPath: string;
+//     pageParam: number;
+//     limit: number;
+//   };
 
 export type PostProps = {
   key: "postRentCar";
@@ -50,6 +49,11 @@ export const ROUTES_DASHBOARD = {
 
     switch (key) {
       case "dashboardCar":
+        params.set("page-param", String(props.pageParam));
+        params.set("limit", String(props.limit));
+        break;
+      case "carFilterBrand":
+        params.set("brand", String(props.brand));
         params.set("page-param", String(props.pageParam));
         params.set("limit", String(props.limit));
         break;

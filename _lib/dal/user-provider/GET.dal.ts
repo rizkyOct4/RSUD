@@ -23,11 +23,11 @@ export const GETUserCarProviderDAL = async (params: TUserCarProviderParam) => {
     case "statistics": {
       return await GETStatistics({ publicId });
     }
-    // case "carFilterBrand": {
-    //   const { brand, limit, offset } = params;
+    case "carFilterBrand": {
+      const { brand, limit, offset } = params;
 
-    //   return await GETFilterBrand({ publicId, brand, limit, offset });
-    // }
+      return await GETFilterBrand({ publicId, brand, limit, offset });
+    }
     // case "carFilterModel": {
     //   const { model, limit, offset } = params;
 

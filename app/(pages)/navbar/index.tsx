@@ -3,19 +3,22 @@
 import { useRouter } from "next/navigation";
 import { useSessionClient } from "@/_util/c-session";
 import dynamic from "next/dynamic";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { AuthContext } from "../../context/context";
 import NavbarAction from "./action";
 
 const Navbar = () => {
   const router = useRouter();
 
-  const { isOpen, setIsOpen, ProfileData, isFetchingProfile } =
-    useContext(AuthContext);
+  // const { isOpen, setIsOpen, ProfileData, isFetchingProfile } =
+  //   useContext(AuthContext);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const session = useSessionClient();
   const publicId = session?.publicId;
   const name = session?.name;
+  const userModel = session?.userModel;
 
   const handleAction = useCallback(
     (actionType: string) => {
@@ -50,10 +53,11 @@ const Navbar = () => {
               <NavbarAction
                 name={name}
                 handler={() => handleAction("open")}
-                ProfileData={ProfileData}
+                // ProfileData={ProfileData}
                 isOpen={isOpen}
-                isFetchingProfile={isFetchingProfile}
+                // isFetchingProfile={isFetchingProfile}
                 setIsOpen={setIsOpen}
+                userModel={userModel}
               />
             ) : (
               <button

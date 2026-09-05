@@ -6,8 +6,6 @@ import { useContext } from "react";
 const SearchAndFilter = () => {
   const { carFilter, setCarFilter } = useContext(UserCarProviderContext);
 
-
-
   return (
     <section className="mb-6 rounded-xl border border-zinc-200 bg-white p-5">
       <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto]">
@@ -36,7 +34,14 @@ const SearchAndFilter = () => {
           </label>
 
           <select
-            id="brand"
+            // id="brand"
+            value={carFilter.brand}
+            onChange={(e) =>
+              setCarFilter({
+                brand: e.target.value,
+                model: "",
+              })
+            }
             className="h-10 w-full rounded-lg border border-zinc-300 bg-white px-3 text-sm text-zinc-900 outline-none focus:border-zinc-900"
             defaultValue=""
           >

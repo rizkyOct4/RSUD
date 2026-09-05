@@ -11,10 +11,21 @@ type TCarListDashboard = {
 const CarListDashboard = ({ setIsRented }: TCarListDashboard) => {
   const router = useRouter();
 
-  const { DashboardCarListData, isFCarListData } = useContext(DashboardContext);
-  const availableCars = DashboardCarListData.filter(
-    (car: { status: string }) => car?.status === "ACTIVE",
-  );
+  const {
+    carFilter,
+    DashboardCarListData,
+    isFCarListData,
+    DashboardSearchCarListData,
+    isFSearchCarListData,
+  } = useContext(DashboardContext);
+
+  // const availableCars = DashboardCarListData.filter(
+  //   (car: { status: string }) => car?.status === "ACTIVE",
+  // );
+
+  const dataUsed = carFilter.brand
+    ? DashboardSearchCarListData
+    : DashboardCarListData;
 
   return (
     <section>
@@ -28,22 +39,22 @@ const CarListDashboard = ({ setIsRented }: TCarListDashboard) => {
             Pilih mobil yang sesuai dengan kebutuhan Anda.
           </p>
         </div>
-
+        {/* 
         <span className="text-sm text-zinc-500">
           {availableCars.length} tersedia
-        </span>
+        </span> */}
       </div>
 
       {/* Cars */}
       <div className="flex flex-wrap gap-4">
         <>
-          {isFCarListData ? (
+          {isFCarListData || isFSearchCarListData ? (
             <p>Loading ... </p>
           ) : (
             <>
-              {Array.isArray(DashboardCarListData) &&
-                DashboardCarListData.length > 0 &&
-                DashboardCarListData.map((car) => (
+              {Array.isArray(dataUsed) &&
+                dataUsed.length > 0 &&
+                dataUsed.map((car) => (
                   <article
                     key={car?.pbId}
                     className="w-full rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]"

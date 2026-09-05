@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import ReturnCarConfirmForm from "./form/POST-confirm";
+import ReturnCarConfirmForm from "./form/PUT-confirm";
 import Header from "./header";
 import RentalList from "./rental-list";
 
@@ -29,6 +29,8 @@ const mockRentals = [
 const ModelReturnCar = () => {
   const [state, setState] = useState({
     isOpen: false,
+    carId: "",
+    id: "",
     plateNumber: "",
   });
 
@@ -36,17 +38,21 @@ const ModelReturnCar = () => {
     if (state.isOpen) {
       return (
         <ReturnCarConfirmForm
+          carId={state.carId}
+          id={state.id}
           plateNumber={state.plateNumber}
           onBack={() =>
             setState({
               isOpen: false,
+              carId: "",
+              id: "",
               plateNumber: "",
             })
           }
         />
       );
     }
-  }, [state.isOpen, state.plateNumber]);
+  }, [state.carId, state.id, state.isOpen, state.plateNumber]);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-8">

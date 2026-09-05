@@ -71,6 +71,7 @@ const CarForm = ({ onBack }: CarFormProps) => {
       const post = {
         ...values,
         pbId: pbId,
+        dailyRate: Number(values.dailyRate.replace(/\./g, "")),
         createdAt: new Date(),
       };
 
@@ -218,7 +219,12 @@ const CarForm = ({ onBack }: CarFormProps) => {
                 type="text"
                 placeholder="BM 1234 AB"
                 autoComplete="off"
-                {...register("plateNumber")}
+                {...register("plateNumber", {
+                  onChange: (e) => {
+                    e.target.value = e.target.value.trimStart().toUpperCase();
+                  },
+                })}
+                // {...register("plateNumber")}
                 className={`h-11 w-full rounded-lg border bg-white pl-10 pr-3.5 text-sm uppercase text-zinc-900 outline-none placeholder:normal-case placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-500/10 ${
                   errors.plateNumber
                     ? "border-red-400 focus:border-red-500"
@@ -255,7 +261,16 @@ const CarForm = ({ onBack }: CarFormProps) => {
                 min="0"
                 placeholder="350000"
                 inputMode="numeric"
-                {...register("dailyRate")}
+                // {...register("dailyRate")}
+                {...register("dailyRate", {
+                  onChange: (e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+
+                    e.target.value = new Intl.NumberFormat("id-ID").format(
+                      Number(value),
+                    );
+                  },
+                })}
                 className={`h-11 w-full rounded-lg border bg-white pl-10 pr-3.5 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-500/10 ${
                   errors.dailyRate
                     ? "border-red-400 focus:border-red-500"

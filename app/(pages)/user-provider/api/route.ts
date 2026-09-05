@@ -14,12 +14,12 @@ export type TUserCarProviderParam =
   | {
       key: "statistics";
     }
-  // | {
-  //     key: "carFilterBrand";
-  //     brand: string;
-  //     limit: number;
-  //     offset: number;
-  //   }
+  | {
+      key: "carFilterBrand";
+      brand: string;
+      limit: number;
+      offset: number;
+    }
   // | {
   //     key: "carFilterModel";
   //     model: string;
@@ -54,21 +54,21 @@ export async function GET(req: NextRequest) {
 
         break;
       }
-      // case "carFilterBrand": {
-      //   const brand = searchParams.get("brand") ?? "";
-      //   const pageParam = Number(searchParams.get("page-param"));
-      //   const limit = Number(searchParams.get("limit"));
-      //   const offset = (pageParam - 1) * limit;
+      case "carFilterBrand": {
+        const brand = searchParams.get("brand") ?? "";
+        const pageParam = Number(searchParams.get("page-param"));
+        const limit = Number(searchParams.get("limit"));
+        const offset = (pageParam - 1) * limit;
 
-      //   params = {
-      //     key,
-      //     brand,
-      //     limit,
-      //     offset,
-      //   };
+        params = {
+          key,
+          brand,
+          limit,
+          offset,
+        };
 
-      //   break;
-      // }
+        break;
+      }
       // case "carFilterModel": {
       //   const model = searchParams.get("model") ?? "";
       //   const pageParam = Number(searchParams.get("page-param"));
